@@ -1,0 +1,29 @@
+<div class="container mt-5">
+    <h4>Usuários</h4>
+    <br>
+    <div>
+        <a class="btn btn-primary" [routerLink]="['criar']">Novo Usuario</a>
+    </div>
+    <table class="table mt-2">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Sobrenome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let usuario of usuarios">
+                <td>{{usuario.nome}}</td>
+                <td>{{usuario.sobrenome}}</td>
+                <td>{{usuario.email}}</td>
+                <td>
+                    <a class="btn btn-warning" [routerLink]="['editar']" [queryParams]="{id: usuario.id}">E
+                    </a>
+                    <a class="btn btn-danger" [routerLink]="['editar/', usuario.id]"> X </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <h4>Novo Usuário</h4>
+    <br>
+    <form (ngSubmit)="salvarUsuario()" [formGroup]="usuarioForm" #formDir="ngForm">
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Nome</label>
+                    <input type="text" class="form-control" formControlName="nome">
+                    <div *ngIf="this.usuarioForm.getError('nome')">
+                        <span class="text-danger">Informe o nome</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Sobrenome</label>
+                    <input type="text" class="form-control" formControlName="sobrenome">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Email</label>
+                    <input type="email" class="form-control" formControlName="email">
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Data Nascimento</label>
+                    <input type="date" class="form-control" max="{{dataAtual | date: 'YYYY-MM-dd'}}"
+                        formControlName="datanascimento">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Escolaridade</label>
+                    <select class="form-select" formControlName="escolaridadeid">
+                        <option selected>Selecione a Escolaridade</option>
+                        <option *ngFor="let item of escolaridades" value="{{item.id}}">{{item.descricao}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Histórico</label>
+                    <input type="file" class="form-control" formControlName="historicoescolarid">
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>Form Valido: {{usuarioForm.valid}}</p>
+            <p>{{this.usuarioForm.getError('nome')}}</p>
+            <button class="btn btn-outline-secondary" [routerLink]="['/usuarios']">Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!usuarioForm.valid">Salvar</button>
+
+        </div>
+    </form>
+
+</div>
