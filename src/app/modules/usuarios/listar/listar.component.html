@@ -21,7 +21,7 @@
                 <td>
                     <a class="btn btn-warning" [routerLink]="['editar']" [queryParams]="{id: usuario.id}">E
                     </a>
-                    <a class="btn btn-danger" [routerLink]="['editar/', usuario.id]"> X </a>
+                    <a class="btn btn-danger" [routerLink]="['remover']" [queryParams]="{id: usuario.id}" > X </a>
                 </td>
             </tr>
         </tbody>

@@ -72,7 +72,7 @@ export class EditarComponent implements OnInit {
       email: [usuario.email, [Validators.required, Validators.email]],
       datanascimento: [usuario.dataNascimento.toString, Validators.required],
       escolaridadeid: [usuario.escolaridadeId, [Validators.required, Validators.min(1)]],
-      historicoescolarid: [usuario.historicoEscolarId, [Validators.required]],
+      historicoescolarid: [usuario.historicoEscolarId],
     });
   }
 

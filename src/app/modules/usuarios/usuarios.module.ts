@@ -6,12 +6,14 @@ import { CriarComponent } from './criar/criar.component';
 import { EditarComponent } from './editar/editar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuariosRoutingModule } from './usuarios.routes';
+import { RemoverComponent } from './remover/remover.component';
 
 @NgModule({
   declarations: [
     ListarComponent,
     CriarComponent,
-    EditarComponent
+    EditarComponent,
+    RemoverComponent
   ],
   imports: [
     RouterModule,

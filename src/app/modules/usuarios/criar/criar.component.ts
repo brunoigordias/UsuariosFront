@@ -56,7 +56,7 @@ export class CriarComponent implements OnInit {
     console.log("usuario: ", this.usuario);
 
 
-    this.service.save(this.usuario).subscribe(
+    this.service.create(this.usuario).subscribe(
       data => {
         console.log(data);
       },

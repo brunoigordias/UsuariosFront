@@ -22,11 +22,16 @@ export class UsuarioService {
             .get<Usuario>(API_PATH + this.service + "/get?id=" + id);
     }
 
-    save(usuario: Usuario) {
+    create(usuario: Usuario) {
         usuario.historicoEscolarId = "0";
         console.log("chegou no salvar ", usuario);
         return this.http
             .post<Usuario>(API_PATH + this.service + "/create", usuario);
+    }
+
+    delete(id: string): Observable<Usuario> {
+        return this.http
+            .delete<Usuario>(API_PATH + this.service + "/get?id=" + id);
     }
 
 
