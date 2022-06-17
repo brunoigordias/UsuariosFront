@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Escolaridade } from 'src/business/models/escolaridade.model';
 import { EscolaridadeService } from '../services/escolaridades.service';
 import { UsuarioService } from '../services/usuarios.service';
@@ -37,7 +37,7 @@ export class CriarComponent implements OnInit {
       sobrenome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       datanascimento: ['', Validators.required],
-      escolaridadeid: ['', [Validators.required, Validators.min(1)]],
+      escolaridadeid: ['', [Validators.required]],
       arquivo: ['', [Validators.required]],
     });
   }
@@ -66,18 +66,13 @@ export class CriarComponent implements OnInit {
     this.usuario = Object.assign({}, this.usuario, f);
     this.usuario.historicoEscolar = this.arquivo;
 
-    console.log("form: ", f);
-    console.log("usuario: ", this.usuario);
-
-
     this.service.create(this.usuario).subscribe({
       next: data => {
         console.log(data);
         this.route.navigate(["/usuarios"]);        
       },
       error: error => { 
-        this.mensagem = "Erro ao salvar o Usuário: " + error;
-        console.log("erro ao salvar ", error) 
+        this.mensagem = "Erro ao salvar o Usuário";
       }
     });
   }

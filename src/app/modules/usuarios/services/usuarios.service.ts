@@ -49,7 +49,7 @@ export class UsuarioService {
         form.append("historicoEscolar", file);
 
         return this.http
-            .post<Usuario>(API_PATH + this.service + "/update", form);
+            .put<Usuario>(API_PATH + this.service + "/update", form);
     }
 
     delete(id: string): Observable<Usuario> {

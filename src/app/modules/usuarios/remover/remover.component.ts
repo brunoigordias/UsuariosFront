@@ -10,7 +10,7 @@ import { UsuarioService } from '../services/usuarios.service';
 })
 export class RemoverComponent implements OnInit {
 
-  usuario!: Usuario;
+  usuario: Usuario;
 
   constructor(private service: UsuarioService,
     private route: ActivatedRoute,
@@ -34,7 +34,6 @@ export class RemoverComponent implements OnInit {
   }
 
   removerUsuario() {
-    console.log("Chegou remover ");
     this.service.delete(this.usuario.id).subscribe({
       next: response => {
         this.router.navigate(['/usuarios']);

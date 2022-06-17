@@ -27,18 +27,37 @@ export class EditarComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-
     this.criarFormulario();
     this.carregarEscolaridades();
     this.carregarUsuario(this.route.snapshot.params["id"])
+  }
+
+
+  editarUsuario() {
+
+    console.log("editar");
+
+    let f = this.usuarioForm.value;
+    this.usuario = Object.assign({}, this.usuario, f);
+    this.usuario.historicoEscolar = this.arquivo;
+
+    this.service.update(this.usuario).subscribe({
+      next: data => {
+        console.log(data);
+        this.router.navigate(["/usuarios"]);
+      },
+      error: error => {
+        this.mensagem = "Erro ao editar o Usuário";
+        console.error(error);
+      }
+    });
   }
 
   carregarUsuario(id: string) {
     this.service.get(id)
       .subscribe({
         next: data => {
-          console.log("Usuario GET: ", data);
-          this.usuarioForm.patchValue({...data,dataNascimento:data.dataNascimento.substring(0,10)});
+          this.usuarioForm.patchValue({ ...data, dataNascimento: data.dataNascimento.substring(0, 10) });
         },
         error: error => {
           console.log(error)
@@ -58,42 +77,24 @@ export class EditarComponent implements OnInit {
 
   criarFormulario() {
     this.usuarioForm = this.fb.group({
+      id: ["", Validators.required],
       nome: ["", Validators.required],
       sobrenome: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       dataNascimento: [null, Validators.required],
-      escolaridadeId: ["", [Validators.required, Validators.min(1)]],
-      arquivo: [""],
+      escolaridadeId: ["", [Validators.required]],
+      historicoEscolarId: ["", [Validators.required]],
+      arquivo: ["",[Validators.required]],
     });
   }
 
   onArquivoSelecionado(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.arquivo = file;    }
+      this.arquivo = file;
+    }
   }
 
-  editarUsuario() {
-    console.log("chegou no editar");
-
-    let f = this.usuarioForm.value;
-    this.usuario = Object.assign({}, this.usuario, f);
-    this.usuario.historicoEscolar = this.arquivo;
-
-    console.log("form: ", f);
-    console.log("usuario: ", this.usuario);
-
-
-    this.service.update(this.usuario).subscribe({
-      next: data => {
-        console.log(data);
-        this.router.navigate(["/usuarios"]);
-      },
-      error: error => { 
-        this.mensagem = "Erro ao editar o Usuário: " + error;
-        console.log("erro ao salvar ", error) 
-      }
-    });
-  }
+  
 
 }
