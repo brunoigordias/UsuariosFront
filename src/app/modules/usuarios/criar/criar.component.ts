@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Escolaridade } from 'src/business/models/escolaridade.model';
-import { EscolaridadeService } from '../services/escolaridades.services';
+import { EscolaridadeService } from '../services/escolaridades.service';
 import { UsuarioService } from '../services/usuarios.service';
 import { Usuario } from '../../../../business/models/usuario.model';
 import { Router } from '@angular/router';

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Escolaridade } from 'src/business/models/escolaridade.model';
 import { Usuario } from 'src/business/models/usuario.model';
-import { EscolaridadeService } from '../services/escolaridades.services';
+import { EscolaridadeService } from '../services/escolaridades.service';
 import { UsuarioService } from '../services/usuarios.service';
 
 @Component({

@@ -8,7 +8,8 @@ import { rootRouterConfig } from './app.routes';
 import { UsuarioService } from './modules/usuarios/services/usuarios.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UsuariosModule } from './modules/usuarios/usuarios.module';
-import { EscolaridadeService } from './modules/usuarios/services/escolaridades.services';
+import { EscolaridadeService } from './modules/usuarios/services/escolaridades.service';
+import { HistoricoService } from './modules/usuarios/services/historicos.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { EscolaridadeService } from './modules/usuarios/services/escolaridades.s
   providers: [
     UsuarioService,
     EscolaridadeService,
+    HistoricoService,
     { provide: APP_BASE_HREF, useValue: '/' }
   ],
   bootstrap: [AppComponent]

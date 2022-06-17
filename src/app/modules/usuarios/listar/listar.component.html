@@ -18,10 +18,11 @@
                 <td>{{usuario.nome}}</td>
                 <td>{{usuario.sobrenome}}</td>
                 <td>{{usuario.email}}</td>
-                <td>
+                <td class="col-2">
                     <a class="btn btn-warning" [routerLink]="['editar', usuario.id]">E
                     </a>
                     <a class="btn btn-danger" [routerLink]="['remover',usuario.id]" > X </a>
+                    <a class="btn btn-primary" (click)="downloadHistorico('5')" > Download </a>
                 </td>
             </tr>
         </tbody>
