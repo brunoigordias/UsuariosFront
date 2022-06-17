@@ -1,11 +1,16 @@
 <div class="container mt-5">
     <h4>Editar Usuário</h4>
-    <br>
+    <hr>
+    <div class="row" *ngIf="mensagem">
+        <div class="alert alert-danger" role="alert">
+            {{mensagem}}
+        </div>
+    </div>
     <form (ngSubmit)="editarUsuario()" [formGroup]="usuarioForm" #formDir="ngForm">
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label  class="form-label">Nome</label>
+                    <label class="form-label">Nome</label>
                     <input type="text" class="form-control" formControlName="nome">
                     <div *ngIf="this.usuarioForm.getError('nome')">
                         <span class="text-danger">Informe o nome</span>
@@ -14,7 +19,7 @@
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label  class="form-label">Sobrenome</label>
+                    <label class="form-label">Sobrenome</label>
                     <input type="text" class="form-control" formControlName="sobrenome">
                 </div>
             </div>
@@ -22,13 +27,13 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label  class="form-label">Email</label>
+                    <label class="form-label">Email</label>
                     <input type="email" class="form-control" formControlName="email">
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <label  class="form-label">Data Nascimento</label>
+                    <label class="form-label">Data Nascimento</label>
                     <input type="date" class="form-control" max="{{dataAtual | date: 'YYYY-MM-dd'}}"
                         formControlName="dataNascimento">
                 </div>
@@ -37,7 +42,7 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <label  class="form-label">Escolaridade</label>
+                    <label class="form-label">Escolaridade</label>
                     <select class="form-select" formControlName="escolaridadeId">
                         <option selected>Selecione a Escolaridade</option>
                         <option *ngFor="let item of escolaridades" value="{{item.id}}">{{item.descricao}}</option>
@@ -47,17 +52,16 @@
             <div class="col">
                 <div class="mb-3">
                     <label class="form-label">Histórico</label>
-                    <!-- <input type="file" class="form-control" formControlName="historicoEscolarId"> -->
+                    <input type="file" class="form-control" formControlName="arquivo"
+                        accept="application/pdf,application/msword" (change)="onArquivoSelecionado($event)">
                 </div>
             </div>
         </div>
 
     </form>
 
-    <div>
-
-        <p>Form Valido: {{usuarioForm.valid}}</p>
-        <p>{{this.usuarioForm.getError('nome')}}</p>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <!-- <p>Form Valido: {{usuarioForm.valid}}</p> -->
         <button class="btn btn-outline-secondary" [routerLink]="['/usuarios']">Cancelar</button>
         <button type="submit" class="btn btn-primary" [disabled]="!usuarioForm.valid">Salvar</button>
     </div>

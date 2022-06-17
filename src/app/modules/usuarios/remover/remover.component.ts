@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/business/models/usuario.model';
 import { UsuarioService } from '../services/usuarios.service';
 
@@ -12,8 +12,9 @@ export class RemoverComponent implements OnInit {
 
   usuario!: Usuario;
 
-  constructor(private service: UsuarioService, private route: ActivatedRoute) {
-    // this.usuario = new Usuario;
+  constructor(private service: UsuarioService,
+    private route: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -24,7 +25,6 @@ export class RemoverComponent implements OnInit {
     this.service.get(id)
       .subscribe({
         next: data => {
-          // console.log("Usuario GET: ", data);
           this.usuario = data;
         },
         error: error => {
@@ -35,6 +35,14 @@ export class RemoverComponent implements OnInit {
 
   removerUsuario() {
     console.log("Chegou remover ");
+    this.service.delete(this.usuario.id).subscribe({
+      next: response => {
+        this.router.navigate(['/usuarios']);
+      },
+      error: error => {
+        console.log(error);
+      }
+    })
   }
 
 }

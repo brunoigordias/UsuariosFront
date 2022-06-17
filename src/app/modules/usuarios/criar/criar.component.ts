@@ -18,6 +18,7 @@ export class CriarComponent implements OnInit {
   escolaridades: Escolaridade[] = [];
   usuario!: Usuario;
   arquivo!: string;
+  mensagem!: string;
 
 
   constructor(private service: UsuarioService,
@@ -37,6 +38,7 @@ export class CriarComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       datanascimento: ['', Validators.required],
       escolaridadeid: ['', [Validators.required, Validators.min(1)]],
+      arquivo: ['', [Validators.required]],
     });
   }
 
@@ -71,9 +73,12 @@ export class CriarComponent implements OnInit {
     this.service.create(this.usuario).subscribe({
       next: data => {
         console.log(data);
-        this.route.navigate(["/usuarios"]);
+        this.route.navigate(["/usuarios"]);        
       },
-      error: error => console.log("erro ao salvar ", error)
+      error: error => { 
+        this.mensagem = "Erro ao salvar o Usuário: " + error;
+        console.log("erro ao salvar ", error) 
+      }
     });
   }
 

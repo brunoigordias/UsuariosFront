@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Escolaridade } from 'src/business/models/escolaridade.model';
 import { Usuario } from 'src/business/models/usuario.model';
 import { EscolaridadeService } from '../services/escolaridades.service';
@@ -17,11 +17,14 @@ export class EditarComponent implements OnInit {
   dataAtual = new Date();
   escolaridades: Escolaridade[] = [];
   usuario!: Usuario;
+  arquivo!: string;
+  mensagem!: string;
 
   constructor(private service: UsuarioService,
     private serviceEscolaridade: EscolaridadeService,
     private fb: FormBuilder,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -29,8 +32,6 @@ export class EditarComponent implements OnInit {
     this.carregarEscolaridades();
     this.carregarUsuario(this.route.snapshot.params["id"])
   }
-
-
 
   carregarUsuario(id: string) {
     this.service.get(id)
@@ -62,16 +63,37 @@ export class EditarComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       dataNascimento: [null, Validators.required],
       escolaridadeId: ["", [Validators.required, Validators.min(1)]],
-      historicoEscolarId: [""],
+      arquivo: [""],
     });
   }
 
-  arquivoSelecionado(event: Event){
-
+  onArquivoSelecionado(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.arquivo = file;    }
   }
 
   editarUsuario() {
     console.log("chegou no editar");
+
+    let f = this.usuarioForm.value;
+    this.usuario = Object.assign({}, this.usuario, f);
+    this.usuario.historicoEscolar = this.arquivo;
+
+    console.log("form: ", f);
+    console.log("usuario: ", this.usuario);
+
+
+    this.service.update(this.usuario).subscribe({
+      next: data => {
+        console.log(data);
+        this.router.navigate(["/usuarios"]);
+      },
+      error: error => { 
+        this.mensagem = "Erro ao editar o Usuário: " + error;
+        console.log("erro ao salvar ", error) 
+      }
+    });
   }
 
 }

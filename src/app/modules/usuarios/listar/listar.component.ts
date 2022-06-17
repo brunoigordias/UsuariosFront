@@ -1,4 +1,3 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/business/models/usuario.model';
 import { HistoricoService } from '../services/historicos.service';
@@ -36,7 +35,6 @@ export class ListarComponent implements OnInit {
     this.serviceHistorico.download(id).subscribe({
       next: data => {
         console.log("download", data);
-        // let nomeArquivo = data.headers.get('content-disposition')?.split(';')[1].split('=')[1];
 
         let blob: Blob = data.body;
         let a = document.createElement('a');

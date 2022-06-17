@@ -26,20 +26,20 @@ export class UsuarioService {
         usuario.id = "0";
         usuario.historicoEscolarId = "0";
 
-        console.log("Usuario chegou no salvar ", usuario);
+        let form = new FormData();
+        let file = usuario.historicoEscolar;
+        delete usuario.historicoEscolar;
 
-        // var files = attachment.files;
-        // delete attachment.files;
+        form.append("usuario", JSON.stringify(usuario));
+        form.append("historicoEscolar", file);
 
-        // formData.append("attachment", JSON.stringify(attachment));
+        return this.http
+            .post<Usuario>(API_PATH + this.service + "/create", form);
+    }
 
-        // for (const index in files) {
-        //     if (Object.prototype.hasOwnProperty.call(files, index)) {
-        //         formData.append("files", files[index]);
-        //     }
-        // }
+    update(usuario: Usuario) {
 
-
+        console.log("Usuario chegou no editar ", usuario);
 
         let form = new FormData();
         let file = usuario.historicoEscolar;
@@ -47,22 +47,14 @@ export class UsuarioService {
 
         form.append("usuario", JSON.stringify(usuario));
         form.append("historicoEscolar", file);
-        // form.append("id",usuario.id);
-        // form.append("nome",usuario.nome);
-        // form.append("sobrenome",usuario.sobrenome);
-        // form.append("email",usuario.email);
-        // form.append("datanascimento","2022-01-01");
-        // form.append("escolaridadeId",usuario.escolaridadeId);
-        // form.append("historicoescolarid","0");
-        // form.append("escolaridade",usuario.historicoEscolar);
 
         return this.http
-            .post<Usuario>(API_PATH + this.service + "/create", form);
+            .post<Usuario>(API_PATH + this.service + "/update", form);
     }
 
     delete(id: string): Observable<Usuario> {
         return this.http
-            .delete<Usuario>(API_PATH + this.service + "/get?id=" + id);
+            .delete<Usuario>(API_PATH + this.service + "/delete?id=" + id);
     }
 
 
