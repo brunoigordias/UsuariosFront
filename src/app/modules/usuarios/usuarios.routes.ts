@@ -8,8 +8,8 @@ import { RemoverComponent } from "./remover/remover.component";
 const usuariosRouterConfig: Routes = [
     { path: '', component: ListarComponent },   
     { path: 'criar', component: CriarComponent },
-    { path: 'editar', component: EditarComponent },
-    { path: 'remover', component: RemoverComponent }
+    { path: 'editar/:id', component: EditarComponent },
+    { path: 'remover/:id', component: RemoverComponent }
 
 ];
 

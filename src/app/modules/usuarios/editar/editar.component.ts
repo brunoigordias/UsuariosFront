@@ -25,55 +25,49 @@ export class EditarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.usuario = new Usuario;
-
-    this.criarFormulario(this.usuario);
+    this.criarFormulario();
     this.carregarEscolaridades();
-
-    this.obterParametro();
+    this.carregarUsuario(this.route.snapshot.params["id"])
   }
 
-  obterParametro() {
-    this.route.queryParamMap
-      .subscribe((params) => {
-        if (params.has("id")) {
-          this.carregarUsuario(<string>params.get("id"));
+
+
+  carregarUsuario(id: string) {
+    this.service.get(id)
+      .subscribe({
+        next: data => {
+          console.log("Usuario GET: ", data);
+          this.usuarioForm.patchValue({...data,dataNascimento:data.dataNascimento.substring(0,10)});
+        },
+        error: error => {
+          console.log(error)
         }
       });
   }
 
-  carregarUsuario(id: string) {    
-    this.service.get(id)
-      .subscribe(
-        data => {
-          console.log("Usuario GET: ", data);
-          this.criarFormulario(data);
-        },
-        error => {
-          console.log(error)
-        }
-      );
-  }
-
   carregarEscolaridades() {
     this.serviceEscolaridade.getEscolaridades()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: data => {
           this.escolaridades = data;
         },
-        error => console.log(error)
-      );
+        error: error => console.log(error)
+      });
   }
 
-  criarFormulario(usuario: Usuario) {
+  criarFormulario() {
     this.usuarioForm = this.fb.group({
-      nome: [usuario.nome, Validators.required],
-      sobrenome: [usuario.sobrenome, Validators.required],
-      email: [usuario.email, [Validators.required, Validators.email]],
-      datanascimento: [usuario.dataNascimento.toString, Validators.required],
-      escolaridadeid: [usuario.escolaridadeId, [Validators.required, Validators.min(1)]],
-      historicoescolarid: [usuario.historicoEscolarId],
+      nome: ["", Validators.required],
+      sobrenome: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email]],
+      dataNascimento: [null, Validators.required],
+      escolaridadeId: ["", [Validators.required, Validators.min(1)]],
+      historicoEscolarId: [""],
     });
+  }
+
+  arquivoSelecionado(event: Event){
+
   }
 
   editarUsuario() {

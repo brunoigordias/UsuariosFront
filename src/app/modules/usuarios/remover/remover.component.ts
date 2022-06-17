@@ -10,39 +10,31 @@ import { UsuarioService } from '../services/usuarios.service';
 })
 export class RemoverComponent implements OnInit {
 
-  usuario: Usuario;
+  usuario!: Usuario;
 
   constructor(private service: UsuarioService, private route: ActivatedRoute) {
-    this.usuario = new Usuario;
+    // this.usuario = new Usuario;
   }
 
   ngOnInit(): void {
-    this.obterParametro();
-  }
-
-  obterParametro() {
-    this.route.queryParamMap
-      .subscribe((params) => {
-        if (params.has("id")) {
-          this.carregarUsuario(<string>params.get("id"));
-        }
-      });
+    this.carregarUsuario(this.route.snapshot.params["id"]);
   }
 
   carregarUsuario(id: string) {
     this.service.get(id)
-      .subscribe(
-        data => {
-          console.log("Usuario GET: ", data);
+      .subscribe({
+        next: data => {
+          // console.log("Usuario GET: ", data);
           this.usuario = data;
         },
-        error => {
+        error: error => {
           console.log(error)
         }
-      );
+      });
   }
 
-  removerUsuario(){
+  removerUsuario() {
+    console.log("Chegou remover ");
   }
 
 }

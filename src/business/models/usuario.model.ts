@@ -1,21 +1,12 @@
 
-export class Usuario {
-
-    constructor() {
-        this.id = "0";
-        this.nome = "";
-        this.sobrenome = "";        
-        this.email = "";
-        this.dataNascimento = new Date;
-        this.escolaridadeId = "";
-        this.historicoEscolarId = "";
-    }
+export interface Usuario {
 
     id: string;
     nome: string;
     sobrenome: string;
     email: string;
-    dataNascimento: Date;
+    dataNascimento: string;
     escolaridadeId: string;
     historicoEscolarId:string;
+    historicoEscolar:string;
 }

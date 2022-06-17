@@ -4,6 +4,7 @@ import { Escolaridade } from 'src/business/models/escolaridade.model';
 import { EscolaridadeService } from '../services/escolaridades.services';
 import { UsuarioService } from '../services/usuarios.service';
 import { Usuario } from '../../../../business/models/usuario.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'usuarios-criar',
@@ -16,11 +17,13 @@ export class CriarComponent implements OnInit {
   dataAtual = new Date();
   escolaridades: Escolaridade[] = [];
   usuario!: Usuario;
+  arquivo!: string;
 
 
-  constructor(private service: UsuarioService, 
-    private serviceEscolaridade: EscolaridadeService, 
-    private fb: FormBuilder) { }
+  constructor(private service: UsuarioService,
+    private serviceEscolaridade: EscolaridadeService,
+    private fb: FormBuilder,
+    private route: Router) { }
 
   ngOnInit(): void {
     this.criarFormulario();
@@ -34,34 +37,44 @@ export class CriarComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       datanascimento: ['', Validators.required],
       escolaridadeid: ['', [Validators.required, Validators.min(1)]],
-      historicoescolarid: ['', [Validators.required]],
     });
   }
 
   carregarEscolaridades() {
     this.serviceEscolaridade.getEscolaridades()
-      .subscribe(
-        data => {
+      .subscribe({
+        next: data => {
           this.escolaridades = data;
         },
-        error => console.log(error)
-      );
+        error: error => console.log(error)
+      });
+  }
+
+  onArquivoSelecionado(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.arquivo = file;
+      console.log("file ", file);
+    }
   }
 
 
   salvarUsuario() {
     let f = this.usuarioForm.value;
     this.usuario = Object.assign({}, this.usuario, f);
+    this.usuario.historicoEscolar = this.arquivo;
+
     console.log("form: ", f);
     console.log("usuario: ", this.usuario);
 
 
-    this.service.create(this.usuario).subscribe(
-      data => {
+    this.service.create(this.usuario).subscribe({
+      next: data => {
         console.log(data);
+        this.route.navigate(["/usuarios"]);
       },
-      error => console.log("erro ao salvar ", error)
-    );
+      error: error => console.log("erro ao salvar ", error)
+    });
   }
 
 
